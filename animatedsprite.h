@@ -4,7 +4,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <math.h>
-#include <bullet.h>
+#include "bullet.h"
 
 class AnimatedSprite:public sf::Sprite
 {

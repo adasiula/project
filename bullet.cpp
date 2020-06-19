@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 
-#include <enemy.h>
+#include "enemy.h"
 
 Bullet::Bullet(float radius)
 {
@@ -85,7 +85,7 @@ void Bullet::settx(sf::Texture &tx)
 
 }
 
-/*void Bullet::shooting2(sf::RenderWindow &w,std::vector<Bullet> &b,sf::Vector2f p,const std::vector<sf::Sprite> &walls,std::vector<Enemy> &en)
+void Bullet::shooting2(sf::RenderWindow &w,std::vector<Bullet> &b,sf::Vector2f p,const std::vector<sf::Sprite> &walls,std::vector<Enemy> &en)
 {
     Bullet b_p;
 
@@ -140,4 +140,4 @@ void Bullet::settx(sf::Texture &tx)
 
 
 
-};*/
+};

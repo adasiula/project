@@ -7,9 +7,9 @@
 #include <stdio.h>
 #include <cstdlib>
 
-#include <bullet.h>
-#include <animatedsprite.h>
-#include <enemy.h>
+#include "bullet.h"
+#include "animatedsprite.h"
+#include "enemy.h"
 
 
 using namespace std;
@@ -107,7 +107,7 @@ int main()
         player.animate(elapsed,walls);
 
         //b1.shooting(window,bullets,sf::Vector2f(player.getPosition().x,player.getPosition().y),walls,enemies);
-        //b1.shooting2(window,bullets,sf::Vector2f(player.getPosition().x,player.getPosition().y),walls,enemies2);
+        b1.shooting2(window,bullets,sf::Vector2f(player.getPosition().x,player.getPosition().y),walls,enemies2);
 
         if(spawncounter<800)
         {
@@ -122,12 +122,12 @@ int main()
             spawncounter=0;
         }
         for(auto &r:enemies2)
-        //r.animate(elapsed,walls,player);
+        r.animate(elapsed,walls,player);
 
 
         //enemy.attack(window,enemies);
 
-        //draw
+        //drawing
         window.draw(metal);
         for(auto i=0;i<bullets.size();i++)
         {

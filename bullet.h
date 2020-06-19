@@ -1,11 +1,14 @@
 #ifndef BULLET_H
 #define BULLET_H
 
+#include "enemy.h"
+
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-#include <enemy.h>
+
+
 
 
 class Bullet:public sf::Sprite,sf::RectangleShape
@@ -18,9 +21,9 @@ public:
 
     Bullet(float radius=3.0);
     void shooting(sf::RenderWindow &w,std::vector<Bullet> &b,sf::Vector2f p,const std::vector<sf::Sprite> &walls,std::vector<sf::Sprite> &enemies);
-    //void shooting2(sf::RenderWindow &w,std::vector<Bullet> &b,sf::Vector2f p,const std::vector<sf::Sprite> &walls,std::vector<Enemy> &en);
+    void shooting2(sf::RenderWindow &w,std::vector<Bullet> &b,sf::Vector2f p,const std::vector<sf::Sprite> &walls,std::vector<Enemy> &en);
 
-    void shooting3(sf::RenderWindow &w,std::vector<Bullet> &b,sf::Vector2f p,const std::vector<sf::Sprite> &walls,std::vector<Enemy> &en);
+    //void shooting3(sf::RenderWindow &w,std::vector<Bullet> &b,sf::Vector2f p,const std::vector<sf::Sprite> &walls,std::vector<Enemy> &en);
 
     void settx(sf::Texture &tx);
 private:

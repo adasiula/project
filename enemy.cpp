@@ -3,15 +3,15 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
-#include <animatedsprite.h>
+#include "animatedsprite.h"
 #include <iostream>
 #include <vector>
-#include<bullet.h>
+#include "bullet.h"
 
 Enemy::Enemy()
 {
     sf::Texture tx_enemy;
-    if(!tx_enemy.loadFromFile("texture/enemy.png")){std::cout<<"not loaded"<<std::endl;}
+    if(!tx_enemy.loadFromFile("texture/enemy.png")){std::cout<<"dick"<<std::endl;}
     setTexture(tx_enemy);
     setTextureRect(sf::IntRect(0,00,60,60));
     setOrigin(30,30);

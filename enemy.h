@@ -4,8 +4,9 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
-#include<animatedsprite.h>
-#include<bullet.h>
+#include "animatedsprite.h"
+#include "bullet.h"
+
 class Enemy:public sf::Sprite//,sf::Drawable
 {
 public:
