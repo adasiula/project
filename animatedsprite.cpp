@@ -4,6 +4,9 @@
 #include <SFML/Graphics.hpp>
 #include <math.h>
 
+#include "enemy.h"
+#include "bullet.h"
+
 AnimatedSprite::AnimatedSprite()
 {
 

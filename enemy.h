@@ -5,18 +5,30 @@
 #include <SFML/Graphics.hpp>
 
 #include "animatedsprite.h"
+class AnimatedSprite;
 #include "bullet.h"
 
 class Enemy:public sf::Sprite//,sf::Drawable
 {
 public:
     Enemy();
-    void attack(sf::Window &w,std::vector<Enemy> &en);
-    void settx(sf::Texture &tx);
-    void animate(const sf::Time &elapsed,const std::vector<sf::Sprite> &walls,AnimatedSprite pl);
-    //void setpos(float x1,float y1);
-    int enemycounter=5;
-    int timespawn=800;
+    void attack(AnimatedSprite pl,sf::Time &elapsed,std::vector<sf::Sprite> &walls);
+    void looking(AnimatedSprite pl);
+
+    int enemycounter;
+    int timespawn;
+    sf::Vector2f pl_position;
+    sf::Vector2f e_position;
+    int life;
+    int start_life=3;
+private:
+    float bounds_left_ = 0;
+    float bounds_right_ = 1300;
+    float bounds_top_ = 0;
+    float bounds_bottom_ = 900;
+
+    float evelocity_x=100;
+    float evelocity_y=100;
 };
 
 #endif // ENEMY_H

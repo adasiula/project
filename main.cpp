@@ -78,18 +78,10 @@ int main()
 
     //enemy
     sf::Texture tx_enemy;
-    sf::Sprite enemy;
-
-    //enemy.settx(tx_enemy);
     if(!tx_enemy.loadFromFile("texture/enemy.png")){return 5;}
-    enemy.setTexture(tx_enemy);
-    enemy.setTextureRect(sf::IntRect(0,00,60,60));
-    std::vector<sf::Sprite> enemies;
-    int spawncounter=200;
-
-    //enemy true
-    Enemy enemy2;
-    std::vector<Enemy> enemies2;
+    Enemy enemy;
+    std::vector<Enemy> enemies;
+    int spawncounter=enemy.timespawn;
 
     sf::Clock clock;
     while (window.isOpen()) {
@@ -105,41 +97,36 @@ int main()
 
         player.rotating(window);
         player.animate(elapsed,walls);
-
-        //b1.shooting(window,bullets,sf::Vector2f(player.getPosition().x,player.getPosition().y),walls,enemies);
-        b1.shooting2(window,bullets,sf::Vector2f(player.getPosition().x,player.getPosition().y),walls,enemies2);
+        b1.shooting(window,bullets,sf::Vector2f(player.getPosition().x,player.getPosition().y),walls,enemies);
 
         if(spawncounter<800)
         {
             spawncounter++;
         }
-        else if(spawncounter>=800&&enemies.size()<5)
+        else if(spawncounter>=800&&enemies.size()<enemy.enemycounter)
         {
-            //enemy.setPosition(sf::Vector2f(rand()%window.getSize().x,rand()%window.getSize().y));
-            enemy2.setPosition(sf::Vector2f(rand()%window.getSize().x,rand()%window.getSize().y));
-            //enemies.emplace_back(sf::Sprite(enemy));
-            enemies2.emplace_back(Enemy(enemy2));
+            enemy.life+=2;
+            enemy.enemycounter+1;
+            enemy.setTexture(tx_enemy);
+            enemy.setPosition(sf::Vector2f(1100,(rand()%(window.getSize().y))));
+            enemies.emplace_back(Enemy(enemy));
+            enemy.setPosition(sf::Vector2f(700,800));
+            enemies.emplace_back(Enemy(enemy));
             spawncounter=0;
         }
-        for(auto &r:enemies2)
-        r.animate(elapsed,walls,player);
-
-
-        //enemy.attack(window,enemies);
+        for(auto &r:enemies)
+        {r.looking(player);
+        r.attack(player,elapsed,walls);}
 
         //drawing
         window.draw(metal);
-        for(auto i=0;i<bullets.size();i++)
+        for(size_t i=0;i<bullets.size();i++)
         {
             window.draw(bullets[i].shape);
         }
-        for(auto i=0;i<enemies.size();i++)
+        for(size_t i=0;i<enemies.size();i++)
         {
-            //window.draw(enemies[i]);
-        }
-        for(auto i=0;i<enemies2.size();i++)
-        {
-            window.draw(enemies2[i]);
+            window.draw(enemies[i]);
         }
 
         window.draw(player);
@@ -148,7 +135,6 @@ int main()
         {
             window.draw(r);
         }
-
 
         window.display();
 

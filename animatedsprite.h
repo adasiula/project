@@ -4,7 +4,9 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <math.h>
+
 #include "bullet.h"
+#include "enemy.h"
 
 class AnimatedSprite:public sf::Sprite
 {
@@ -20,8 +22,6 @@ private:
 
     float velocity_x=300;
     float velocity_y=300;
-   //shoot
-
 };
 
 #endif // ANIMATEDSPRITE_H
