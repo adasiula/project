@@ -20,8 +20,8 @@ public:
     float start_maxspeed=3;
     int speedshoot;
     int start_speedshoot=350;
-    int start_damage=2;
-    int damage=0;
+    float start_damage=2;
+    float damage=0;
 
     int sp=0;
 

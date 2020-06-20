@@ -19,7 +19,7 @@ Enemy::Enemy()
     enemycounter=6;
     timespawn=800;
     life=start_life;
-    std::cout<<life<<std::endl;
+    //std::cout<<life<<std::endl;
 }
 
 void Enemy::attack(AnimatedSprite pl,sf::Time &elapsed,std::vector<sf::Sprite> &walls)
@@ -97,10 +97,22 @@ void Enemy::attack(AnimatedSprite pl,sf::Time &elapsed,std::vector<sf::Sprite> &
         if(pl_position.x>e_position.x)
         {
             move(evelocity_x*elapsed.asSeconds(),0);
+            for (auto &r:walls){
+                if(r.getGlobalBounds().intersects(this->getGlobalBounds()))
+                {
+                    move(-abs(evelocity_x*elapsed.asSeconds()),0);
+                }
+        }
         }
         else if(pl_position.x<e_position.x)
         {
             move(-abs(evelocity_x*elapsed.asSeconds()),0);
+            for (auto &r:walls){
+                if(r.getGlobalBounds().intersects(this->getGlobalBounds()))
+                {
+                    move(abs(evelocity_x*elapsed.asSeconds()),0);
+                }
+        }
         }
         else
         {

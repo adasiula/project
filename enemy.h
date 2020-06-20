@@ -15,12 +15,12 @@ public:
     void attack(AnimatedSprite pl,sf::Time &elapsed,std::vector<sf::Sprite> &walls);
     void looking(AnimatedSprite pl);
 
-    int enemycounter;
+    float enemycounter;
     int timespawn;
     sf::Vector2f pl_position;
     sf::Vector2f e_position;
-    int life;
-    int start_life=3;
+    float life;
+    float start_life=3;
 private:
     float bounds_left_ = 0;
     float bounds_right_ = 1300;

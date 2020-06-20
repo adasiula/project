@@ -88,7 +88,7 @@ void AnimatedSprite::shooting(sf::RenderWindow &w,std::vector<Bullet> &b,const s
     sf::Vector2f aimdirnorm;
     aimdirnorm.x=aimdir.x / sqrt(pow(aimdir.x,2)+pow(aimdir.y,2));
     aimdirnorm.y=aimdir.y / sqrt(pow(aimdir.x,2)+pow(aimdir.y,2));
-    //int sp=b_p.speedshoot;
+
     //std::cout<<"sp: "<<sp<<"speedshot"<<b_p.speedshoot<<std::endl;
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
@@ -131,6 +131,7 @@ void AnimatedSprite::shooting(sf::RenderWindow &w,std::vector<Bullet> &b,const s
                 std::cout<<en[k].life<<std::endl;
                 if(en[k].life<=0)
                 {
+                    point+=1;
                     en.erase(en.begin()+k);
                     b1.damage+=(b1.damage/10);
                     if(b1.maxspeed<5)
@@ -139,7 +140,7 @@ void AnimatedSprite::shooting(sf::RenderWindow &w,std::vector<Bullet> &b,const s
                     }
                     if(b1.speedshoot>100)
                     {
-                    b1.speedshoot-=10;
+                    b1.speedshoot-=1;
                     }
                 }
 

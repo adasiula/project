@@ -1,11 +1,14 @@
 #include <iostream>
 #include <memory>
+
 #include <vector>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+
 #include <math.h>
 #include <stdio.h>
 #include <cstdlib>
+#include <sstream>
 
 #include "bullet.h"
 #include "animatedsprite.h"
@@ -16,7 +19,7 @@ using namespace std;
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1300, 900), "My window");
+    sf::RenderWindow window(sf::VideoMode(1300, 900), "Shooter");
     srand(time(NULL));
     hack();
     //player
@@ -43,10 +46,7 @@ int main()
     Bullet b1;
     vector<Bullet> bullets;
     sf::Texture tx_bullet;
-    //if(!tx_bullet.loadFromFile("texture/bullet.png")){return 3;}
-    //else
-    //{std::cout<<"loaded"<<std::endl;}
-    //b1.Bullet::setTexture(tx_bullet);
+
 
     //wall
     sf::Texture tx_wall;
@@ -83,6 +83,17 @@ int main()
     std::vector<Enemy> enemies;
     int spawncounter=enemy.timespawn;
 
+    //texts
+    std::string score="SCORE:";
+    sf::Text mytext1;
+    sf::Text mytext2;
+    sf::Text mytext3;
+    sf::Font font;
+    if(!font.loadFromFile("fonts/font.ttf")){return 6;};
+
+    mytext1.setPosition(1100,30);
+    mytext2.setPosition(1210,30);
+
     sf::Clock clock;
     while (window.isOpen()) {
         sf::Time elapsed = clock.restart();
@@ -99,14 +110,15 @@ int main()
         player.animate(elapsed,walls);
         player.shooting(window,bullets,walls,enemies,b1);
 
-        if(spawncounter<800)
+        if(spawncounter<enemy.timespawn)
         {
             spawncounter++;
         }
-        else if(spawncounter>=800&&enemies.size()<enemy.enemycounter)
+        else if(spawncounter>=enemy.timespawn&&(int)enemies.size()<enemy.enemycounter)
         {
-            enemy.life+=2;
-            enemy.enemycounter+1;
+            if(enemy.life<600)enemy.life+=(enemy.life/9);
+            enemy.enemycounter+=0.1;
+            if(enemy.timespawn>300)enemy.timespawn-=5;
             enemy.setTexture(tx_enemy);
             enemy.setPosition(sf::Vector2f(1100,(rand()%(window.getSize().y))));
             enemies.emplace_back(Enemy(enemy));
@@ -118,6 +130,26 @@ int main()
         {r.looking(player);
         r.attack(player,elapsed,walls);}
 
+        //update text
+        mytext1.setString(score);
+        mytext1.setCharacterSize(30);
+        mytext1.setStyle(sf::Text::Bold);
+        mytext1.setFont(font);
+        mytext1.setFillColor(sf::Color::Red);
+
+        std::stringstream ss;
+        ss<<player.point;
+
+        mytext2.setString(ss.str().c_str());
+        mytext2.setCharacterSize(30);
+        mytext2.setStyle(sf::Text::Bold);
+        mytext2.setFont(font);
+        mytext2.setFillColor(sf::Color::White);
+
+        for(auto &r:enemies)
+        {
+            ss<<r.life;
+        }
         //drawing
         window.draw(metal);
         for(size_t i=0;i<bullets.size();i++)
@@ -135,6 +167,9 @@ int main()
         {
             window.draw(r);
         }
+        window.draw(mytext1);
+        window.draw(mytext2);
+
 
         window.display();
 
