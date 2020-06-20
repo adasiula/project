@@ -7,6 +7,7 @@ SOURCES += \
         animatedsprite.cpp \
         bullet.cpp \
         enemy.cpp \
+        function.cpp \
         main.cpp
 INCLUDEPATH += "C:/SFML-2.5.1/include"
 LIBS += -L"C:/SFML-2.5.1/lib"

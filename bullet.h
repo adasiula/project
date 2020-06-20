@@ -19,18 +19,15 @@ public:
     float maxspeed;
     float start_maxspeed=3;
     int speedshoot;
-    int start_speedshoot=450;
-    int startdamage=1;
+    int start_speedshoot=350;
+    int start_damage=2;
     int damage=0;
 
-    Bullet(float radius=3.0);
-    void shooting(sf::RenderWindow &w,std::vector<Bullet> &b,sf::Vector2f p,const std::vector<sf::Sprite> &walls,std::vector<Enemy> &en);
-private:
-    sf::Vector2f playercenter;
-    sf::Vector2f mousepos;
-    sf::Vector2f aimdir;
-    sf::Vector2f aimdirnorm;
     int sp=0;
+
+
+    Bullet(float radius=3.0);
+private:
 };
 
 #endif // BULLET_H

@@ -10,7 +10,7 @@
 #include "bullet.h"
 #include "animatedsprite.h"
 #include "enemy.h"
-
+#include "function.cpp"
 
 using namespace std;
 
@@ -18,7 +18,7 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(1300, 900), "My window");
     srand(time(NULL));
-
+    hack();
     //player
     sf::Texture tx_player;
     if(!tx_player.loadFromFile("texture/player.png")){return 1;}
@@ -97,7 +97,7 @@ int main()
 
         player.rotating(window);
         player.animate(elapsed,walls);
-        b1.shooting(window,bullets,sf::Vector2f(player.getPosition().x,player.getPosition().y),walls,enemies);
+        player.shooting(window,bullets,walls,enemies,b1);
 
         if(spawncounter<800)
         {
