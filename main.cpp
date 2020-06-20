@@ -85,9 +85,11 @@ int main()
 
     //texts
     std::string score="SCORE:";
+    int lf;
     sf::Text mytext1;
     sf::Text mytext2;
     sf::Text mytext3;
+    std::vector<sf::Text> lifes;
     sf::Font font;
     if(!font.loadFromFile("fonts/font.ttf")){return 6;};
 
@@ -110,13 +112,15 @@ int main()
         player.animate(elapsed,walls);
         player.shooting(window,bullets,walls,enemies,b1);
 
+
+
         if(spawncounter<enemy.timespawn)
         {
             spawncounter++;
         }
         else if(spawncounter>=enemy.timespawn&&(int)enemies.size()<enemy.enemycounter)
         {
-            if(enemy.life<600)enemy.life+=(enemy.life/9);
+            if(enemy.life<600)enemy.life+=1;
             enemy.enemycounter+=0.1;
             if(enemy.timespawn>300)enemy.timespawn-=5;
             enemy.setTexture(tx_enemy);
@@ -129,6 +133,8 @@ int main()
         for(auto &r:enemies)
         {r.looking(player);
         r.attack(player,elapsed,walls);}
+
+
 
         //update text
         mytext1.setString(score);
@@ -148,8 +154,17 @@ int main()
 
         for(auto &r:enemies)
         {
-            ss<<r.life;
+            stringstream l;
+            l<<r.life;
+            mytext3.setString(l.str().c_str());
+            mytext3.setCharacterSize(30);
+            mytext3.setStyle(sf::Text::Bold);
+            mytext3.setFont(font);
+            mytext3.setFillColor(sf::Color::Red);
+            mytext3.setPosition(r.getPosition().x,r.getPosition().y);
+            lifes.emplace_back(mytext3);
         }
+
         //drawing
         window.draw(metal);
         for(size_t i=0;i<bullets.size();i++)
@@ -169,6 +184,11 @@ int main()
         }
         window.draw(mytext1);
         window.draw(mytext2);
+        for(size_t i=0;i<lifes.size();i++)
+        {
+            window.draw(lifes[i]);
+            lifes.erase(lifes.begin()+i);
+        }
 
 
         window.display();

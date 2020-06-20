@@ -124,11 +124,12 @@ void AnimatedSprite::shooting(sf::RenderWindow &w,std::vector<Bullet> &b,const s
             {
             if(b[i].shape.getGlobalBounds().intersects(en[k].getGlobalBounds()))
             {
+
                 en[k].life-=b1.damage;
-                std::cout<<"damage: "<<b1.damage
-                        <<"\nmaxspeed: "<<b1.maxspeed
-                       <<"\nspeedshot: "<<b1.speedshoot<<std::endl;
-                std::cout<<en[k].life<<std::endl;
+                //std::cout<<"damage: "<<b1.damage
+                  //      <<"\nmaxspeed: "<<b1.maxspeed
+                    //   <<"\nspeedshot: "<<b1.speedshoot<<std::endl;
+                //std::cout<<en[k].life<<std::endl;
                 if(en[k].life<=0)
                 {
                     point+=1;

@@ -19,8 +19,8 @@ public:
     int timespawn;
     sf::Vector2f pl_position;
     sf::Vector2f e_position;
-    float life;
-    float start_life=3;
+    int life;
+    int start_life=3;
 private:
     float bounds_left_ = 0;
     float bounds_right_ = 1300;
