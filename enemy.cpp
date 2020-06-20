@@ -19,7 +19,7 @@ Enemy::Enemy()
     enemycounter=6;
     timespawn=800;
     life=start_life;
-    std::cout<<life<<std::endl;
+    //std::cout<<life<<std::endl;
 }
 
 void Enemy::attack(AnimatedSprite pl,sf::Time &elapsed,std::vector<sf::Sprite> &walls)

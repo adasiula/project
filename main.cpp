@@ -19,7 +19,7 @@ using namespace std;
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1300, 900), "Shooter");
+    sf::RenderWindow window(sf::VideoMode(1200, 900), "Shooter");
     srand(time(NULL));
     hack();
     //player
@@ -29,7 +29,7 @@ int main()
     player.setScale(0.3,0.3);
     player.setTexture(tx_player);
     player.setTextureRect(sf::IntRect(10,10,200,200));
-    player.setPosition(600,600);
+    player.setPosition(window.getSize().x/2,window.getSize().y/2);
     player.setOrigin(100,100);
 
     //background
@@ -67,14 +67,14 @@ int main()
         r.setTexture(tx_wall);
         r.setScale(0.5,0.5);
     }
-    walls[0].setPosition(0,170);
-    walls[0].setTextureRect(sf::IntRect(0,0,1200,100));
-    walls[1].setPosition(600,170);
+    walls[0].setPosition(400,600);
+    walls[0].setTextureRect(sf::IntRect(0,0,100,600));
+    walls[1].setPosition(800,0);
     walls[1].setTextureRect(sf::IntRect(0,0,100,700));
-    walls[2].setPosition(800,700);
-    walls[2].setTextureRect(sf::IntRect(0,0,100,800));
-    walls[3].setPosition(250,400);
-    walls[3].setTextureRect(sf::IntRect(0,0,100,1000));
+    walls[2].setPosition(0,300);
+    walls[2].setTextureRect(sf::IntRect(0,0,900,100));
+    walls[3].setPosition(800,600);
+    walls[3].setTextureRect(sf::IntRect(0,0,1100,100));
 
     //enemy
     sf::Texture tx_enemy;
@@ -85,7 +85,6 @@ int main()
 
     //texts
     std::string score="SCORE:";
-    int lf;
     sf::Text mytext1;
     sf::Text mytext2;
     sf::Text mytext3;
@@ -93,8 +92,8 @@ int main()
     sf::Font font;
     if(!font.loadFromFile("fonts/font.ttf")){return 6;};
 
-    mytext1.setPosition(1100,30);
-    mytext2.setPosition(1210,30);
+    mytext1.setPosition(window.getSize().x-200,30);
+    mytext2.setPosition(window.getSize().x-80,30);
 
     sf::Clock clock;
     while (window.isOpen()) {
@@ -121,20 +120,46 @@ int main()
         else if(spawncounter>=enemy.timespawn&&(int)enemies.size()<enemy.enemycounter)
         {
             if(enemy.life<600)enemy.life+=1;
+            if(enemy.life>30)enemy.setScale(1.3,1.3);
+            if(enemy.life>40)enemy.setScale(1.6,1.6);
             enemy.enemycounter+=0.1;
             if(enemy.timespawn>300)enemy.timespawn-=5;
             enemy.setTexture(tx_enemy);
-            enemy.setPosition(sf::Vector2f(1100,(rand()%(window.getSize().y))));
+            int choose=rand()%4;
+            switch(choose)
+            {
+            case 0:
+            {
+                enemy.setPosition(sf::Vector2f(window.getSize().x-30,window.getSize().y/2));
+                break;
+            }
+            case 1:
+            {
+                enemy.setPosition(sf::Vector2f(30,window.getSize().y/2));
+                break;
+            }
+            case 2:
+            {
+                enemy.setPosition(sf::Vector2f(window.getSize().x/2,30));
+                break;
+            }
+            case 3:
+            {
+                enemy.setPosition(sf::Vector2f(window.getSize().x/2,window.getSize().y-30));
+                break;
+            }
+            default:
+                break;
+            }
+            //enemy.setPosition(sf::Vector2f(1100,(rand()%(window.getSize().y))));
             enemies.emplace_back(Enemy(enemy));
-            enemy.setPosition(sf::Vector2f(700,800));
-            enemies.emplace_back(Enemy(enemy));
+            //enemy.setPosition(sf::Vector2f(700,800));
+            //enemies.emplace_back(Enemy(enemy));
             spawncounter=0;
         }
         for(auto &r:enemies)
         {r.looking(player);
         r.attack(player,elapsed,walls);}
-
-
 
         //update text
         mytext1.setString(score);

@@ -21,7 +21,7 @@ public:
     int point=0;
 private:
     float bounds_left_ = 0;
-    float bounds_right_ = 1300;
+    float bounds_right_ = 1200;
     float bounds_top_ = 0;
     float bounds_bottom_ = 900;
 
