@@ -1,6 +1,8 @@
 #include "bullet.h"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+
 #include <math.h>
 #include <iostream>
 #include <vector>
@@ -17,5 +19,8 @@ Bullet::Bullet(float radius)
 
     this->shape_bullet.setRadius(radius);
     this->shape_bullet.setFillColor(sf::Color::Yellow);
+
+    if(!shoot_buffer.loadFromFile("sound/shoot.ogg")){std::cout<<"not loaded\n";};
+    shoot.setBuffer(shoot_buffer);
 };
 

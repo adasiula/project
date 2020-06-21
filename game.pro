@@ -5,9 +5,9 @@ CONFIG -= qt
 
 SOURCES += \
         animatedsprite.cpp \
+        animation.cpp \
         bullet.cpp \
         enemy.cpp \
-        function.cpp \
         main.cpp
 INCLUDEPATH += "C:/SFML-2.5.1/include"
 LIBS += -L"C:/SFML-2.5.1/lib"
@@ -19,5 +19,6 @@ CONFIG(debug, debug|release){
 
 HEADERS += \
     animatedsprite.h \
+    animation.h \
     bullet.h \
     enemy.h

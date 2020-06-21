@@ -2,6 +2,7 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #include <iostream>
 #include <vector>
@@ -13,7 +14,7 @@ Enemy::Enemy()
 {
     this->setTextureRect(sf::IntRect(0,0,60,60));
     this->setOrigin(30,30);
-    enemycounter=6;
+    enemycounter=1;
     timespawn=800;
     life=start_life;
     damage_punch=1;

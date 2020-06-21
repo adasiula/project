@@ -4,6 +4,7 @@
 #include <vector>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #include <math.h>
 #include <stdio.h>
@@ -13,7 +14,7 @@
 #include "bullet.h"
 #include "animatedsprite.h"
 #include "enemy.h"
-#include "function.cpp"
+#include "animation.h"
 
 using namespace std;
 
@@ -21,7 +22,7 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(1200, 900), "Shooter");
     srand(time(NULL));
-    hack();
+
     //player
     sf::Texture tx_player;
     if(!tx_player.loadFromFile("texture/player.png")){return 1;}
@@ -99,6 +100,20 @@ int main()
     mytext1.setPosition(window.getSize().x-200,30);
     mytext2.setPosition(window.getSize().x-80,30);
 
+    //animation
+    Animation animation(&tx_enemy,sf::Vector2u(3,3),0.3);
+
+    //foot player animation
+
+
+    //music
+    sf::Music music;
+    if(!music.openFromFile("sound/music.ogg")){return 7;};
+    music.setVolume(50);
+    music.setLoop(true);
+    music.play();
+
+
     sf::Clock clock;
     while (window.isOpen()) {
         sf::Time elapsed = clock.restart();
@@ -140,12 +155,12 @@ int main()
         player.animate(elapsed,walls);
         player.shooting(window,bullets,walls,enemies,b1);
 
-
+        //spawning enemies
         if(spawncounter<enemy.timespawn)
         {
             spawncounter++;
         }
-        else if(spawncounter>=enemy.timespawn&&(int)enemies.size()<enemy.enemycounter)
+        else if(spawncounter>=enemy.timespawn&&(int)enemies.size()<=enemy.enemycounter-1)
         {
             if(enemy.life<600)enemy.life+=1;
             if(enemy.life>30)enemy.setScale(1.3,1.3);
@@ -158,28 +173,23 @@ int main()
             {
             case 0:
             {
-                enemy.setPosition(sf::Vector2f(window.getSize().x-30,window.getSize().y/2));
-                break;
+                enemy.setPosition(sf::Vector2f(window.getSize().x-30,window.getSize().y/2));break;
             }
             case 1:
             {
-                enemy.setPosition(sf::Vector2f(30,window.getSize().y/2));
-                break;
+                enemy.setPosition(sf::Vector2f(30,window.getSize().y/2));break;
             }
             case 2:
             {
-                enemy.setPosition(sf::Vector2f(window.getSize().x/2,30));
-                break;
+                enemy.setPosition(sf::Vector2f(window.getSize().x/2,30));break;
             }
             case 3:
             {
-                enemy.setPosition(sf::Vector2f(window.getSize().x/2,window.getSize().y-30));
-                break;
+                enemy.setPosition(sf::Vector2f(window.getSize().x/2,window.getSize().y-30));break;
             }
-            default:
-                break;
+            default:break;
             }
-            enemies.emplace_back(Enemy(enemy));
+            enemies.emplace_back(enemy);
             spawncounter=0;
         }
         for(auto &r:enemies)
@@ -234,12 +244,25 @@ int main()
         mytext5.setFillColor(sf::Color::White);
         mytext5.setPosition(30,30);
 
+        //animations update
+        for(auto &r:enemies)
+        {
+        animation.update(elapsed.asSeconds());
+        r.setTextureRect(animation.uvRect);
+        }
+        //sound
+
+
+
         //drawing
+
         window.draw(metal);
+
         for(size_t i=0;i<bullets.size();i++)
         {
             window.draw(bullets[i].shape_bullet);
         }
+
         for(size_t i=0;i<enemies.size();i++)
         {
             window.draw(enemies[i]);
@@ -261,6 +284,7 @@ int main()
             lifes.erase(lifes.begin()+i);
         }
        }
+
         window.display();
     }
 

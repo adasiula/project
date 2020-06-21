@@ -5,6 +5,7 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <vector>
 
 #include "enemy.h"
@@ -24,6 +25,9 @@ public:
     float damage=0;
 
     int sp=0;
+
+    sf::SoundBuffer shoot_buffer;
+    sf::Sound shoot;
 
     Bullet(float radius=3.0);
 private:

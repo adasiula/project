@@ -2,6 +2,7 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <math.h>
 
 #include "enemy.h"
@@ -10,7 +11,7 @@
 
 AnimatedSprite::AnimatedSprite()
 {
-    life=10;
+    life=30;
 }
 
 void AnimatedSprite::rotating(sf::RenderWindow &w)
@@ -88,10 +89,13 @@ void AnimatedSprite::shooting(sf::RenderWindow &w,std::vector<Bullet> &b,const s
     aimdirnorm.x=aimdir.x / sqrt(pow(aimdir.x,2)+pow(aimdir.y,2));
     aimdirnorm.y=aimdir.y / sqrt(pow(aimdir.x,2)+pow(aimdir.y,2));
 
+
+
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         if(b1.sp>=b1.speedshoot)
         {
+            b1.shoot.play();
             b1.shape_bullet.setPosition(playercenter);
             b1.velocity_bullet=aimdirnorm*b1.maxspeed;
             b.emplace_back(Bullet(b1));
@@ -122,15 +126,11 @@ void AnimatedSprite::shooting(sf::RenderWindow &w,std::vector<Bullet> &b,const s
             {
 
                 en[k].life-=b1.damage;
-                //std::cout<<"damage: "<<b1.damage
-                  //      <<"\nmaxspeed: "<<b1.maxspeed
-                    //   <<"\nspeedshot: "<<b1.speedshoot<<std::endl;
-                //std::cout<<en[k].life<<std::endl;
                 if(en[k].life<=0)
                 {
                     point+=1;
                     en.erase(en.begin()+k);
-                    b1.damage+=(b1.damage/10);
+                    b1.damage+=(b1.damage/25);
                     if(b1.maxspeed<5)
                     {
                     b1.maxspeed+=0.01;
