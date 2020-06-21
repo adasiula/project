@@ -11,11 +11,11 @@
 class Enemy;
 #include "animatedsprite.h"
 
-class Bullet:public sf::Sprite,sf::RectangleShape
+class Bullet:public sf::Sprite//,sf::RectangleShape
 {
 public:
-    sf::CircleShape shape;
-    sf::Vector2f currVelocity;
+    sf::CircleShape shape_bullet;
+    sf::Vector2f velocity_bullet;
     float maxspeed;
     float start_maxspeed=3;
     int speedshoot;
@@ -24,7 +24,6 @@ public:
     float damage=0;
 
     int sp=0;
-
 
     Bullet(float radius=3.0);
 private:

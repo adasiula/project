@@ -18,7 +18,9 @@ public:
     void animate(const sf::Time &elapsed,const std::vector<sf::Sprite> &walls);
     void shooting(sf::RenderWindow &w,std::vector<Bullet> &b,const std::vector<sf::Sprite> &walls,std::vector<Enemy> &en,Bullet &b1);
 
+    int life;
     int point=0;
+    int inmortal_time=600;
 private:
     float bounds_left_ = 0;
     float bounds_right_ = 1200;

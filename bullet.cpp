@@ -10,12 +10,12 @@
 
 Bullet::Bullet(float radius)
 {
-    currVelocity=sf::Vector2f(0.0,0.0);
+    velocity_bullet=sf::Vector2f(0.0,0.0);
     maxspeed=start_maxspeed;
     speedshoot=start_speedshoot;//700;
     damage=start_damage;
 
-    this->shape.setRadius(radius);
-    this->shape.setFillColor(sf::Color::Yellow);
+    this->shape_bullet.setRadius(radius);
+    this->shape_bullet.setFillColor(sf::Color::Yellow);
 };
 

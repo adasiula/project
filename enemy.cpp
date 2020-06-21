@@ -11,15 +11,12 @@
 
 Enemy::Enemy()
 {
-    sf::Texture tx_enemy;
-    if(!tx_enemy.loadFromFile("texture/enemy.png")){std::cout<<"not loaded"<<std::endl;}
-    this->setTexture(tx_enemy);
     this->setTextureRect(sf::IntRect(0,0,60,60));
     this->setOrigin(30,30);
     enemycounter=6;
     timespawn=800;
     life=start_life;
-    //std::cout<<life<<std::endl;
+    damage_punch=1;
 }
 
 void Enemy::attack(AnimatedSprite pl,sf::Time &elapsed,std::vector<sf::Sprite> &walls)
@@ -132,5 +129,20 @@ void Enemy::looking(AnimatedSprite pl)
     this->setRotation(rot);
 }
 
+void Enemy::punch(AnimatedSprite &p)
+{
+        if(p.getGlobalBounds().intersects(this->getGlobalBounds()))
+        {
+            //std::cout<<"unkillable "<<unkillable<<std::endl;
+            //std::cout<<"inmortal_time "<<p.inmortal_time<<std::endl;
+            if(p.inmortal_time>600)
+            {
+            p.life-=damage_punch;
+            std::cout<<p.life<<std::endl;
+            p.inmortal_time=0;
+            }
+    }
+    p.inmortal_time++;
 
+}
 

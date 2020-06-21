@@ -52,9 +52,9 @@ int main()
     sf::Texture tx_wall;
     if(!tx_wall.loadFromFile("texture/wall.png")){return 4;}
     tx_wall.setRepeated(true);
-    sf::Sprite wall;
+    sf::Sprite wall;//130 na 130
     wall.setTexture(tx_wall);
-    wall.setTextureRect(sf::IntRect(0,0,500,500));
+    wall.setTextureRect(sf::IntRect(0,0,1000,1000));
 
     vector<sf::Sprite> walls;
     int number_of_walls=4;
@@ -68,13 +68,13 @@ int main()
         r.setScale(0.5,0.5);
     }
     walls[0].setPosition(400,600);
-    walls[0].setTextureRect(sf::IntRect(0,0,100,600));
+    walls[0].setTextureRect(sf::IntRect(0,0,130,600));
     walls[1].setPosition(800,0);
-    walls[1].setTextureRect(sf::IntRect(0,0,100,700));
+    walls[1].setTextureRect(sf::IntRect(0,0,130,700));
     walls[2].setPosition(0,300);
-    walls[2].setTextureRect(sf::IntRect(0,0,900,100));
+    walls[2].setTextureRect(sf::IntRect(0,0,900,130));
     walls[3].setPosition(800,600);
-    walls[3].setTextureRect(sf::IntRect(0,0,1100,100));
+    walls[3].setTextureRect(sf::IntRect(0,0,1100,130));
 
     //enemy
     sf::Texture tx_enemy;
@@ -88,6 +88,10 @@ int main()
     sf::Text mytext1;
     sf::Text mytext2;
     sf::Text mytext3;
+    sf::Text mytext4;
+    int life_counter=player.life;
+    sf::Text mytext5;
+    std::string health ="HEALTH:";
     std::vector<sf::Text> lifes;
     sf::Font font;
     if(!font.loadFromFile("fonts/font.ttf")){return 6;};
@@ -107,10 +111,34 @@ int main()
 
         window.clear(sf::Color::Black);
 
+        if(player.life<=0)
+        {
+            window.setActive(false);
+            window.clear(sf::Color::Black);
+            sf::Text gameover;
+            std::string gm= "GAME OVER";
+            gameover.setString(gm);
+            gameover.setCharacterSize(100);
+            gameover.setStyle(sf::Text::Bold);
+            gameover.setFont(font);
+            gameover.setFillColor(sf::Color::White);
+            gameover.setPosition(350,350);
+            window.draw(gameover);
+            gameover.setString(score);
+            gameover.setPosition(450,500);
+            gameover.setCharacterSize(50);
+            window.draw(gameover);
+            std::stringstream result;
+            result<<player.point;
+            gameover.setString(result.str().c_str());
+            gameover.setPosition(650,500);
+            window.draw(gameover);
+        }
+        else
+        {
         player.rotating(window);
         player.animate(elapsed,walls);
         player.shooting(window,bullets,walls,enemies,b1);
-
 
 
         if(spawncounter<enemy.timespawn)
@@ -151,15 +179,13 @@ int main()
             default:
                 break;
             }
-            //enemy.setPosition(sf::Vector2f(1100,(rand()%(window.getSize().y))));
             enemies.emplace_back(Enemy(enemy));
-            //enemy.setPosition(sf::Vector2f(700,800));
-            //enemies.emplace_back(Enemy(enemy));
             spawncounter=0;
         }
         for(auto &r:enemies)
         {r.looking(player);
-        r.attack(player,elapsed,walls);}
+        r.attack(player,elapsed,walls);
+        r.punch(player);}
 
         //update text
         mytext1.setString(score);
@@ -190,11 +216,29 @@ int main()
             lifes.emplace_back(mytext3);
         }
 
+        life_counter=player.life;
+        stringstream l2;
+        l2<<life_counter;
+        mytext4.setString(l2.str().c_str());
+        mytext4.setCharacterSize(30);
+        mytext4.setStyle(sf::Text::Bold);
+        mytext4.setFont(font);
+        if(player.life>21)mytext4.setFillColor(sf::Color::Green);
+        else mytext4.setFillColor(sf::Color::Red);
+        mytext4.setPosition(230,30);
+
+        mytext5.setString(health);
+        mytext5.setCharacterSize(30);
+        mytext5.setStyle(sf::Text::Bold);
+        mytext5.setFont(font);
+        mytext5.setFillColor(sf::Color::White);
+        mytext5.setPosition(30,30);
+
         //drawing
         window.draw(metal);
         for(size_t i=0;i<bullets.size();i++)
         {
-            window.draw(bullets[i].shape);
+            window.draw(bullets[i].shape_bullet);
         }
         for(size_t i=0;i<enemies.size();i++)
         {
@@ -209,15 +253,15 @@ int main()
         }
         window.draw(mytext1);
         window.draw(mytext2);
+        window.draw(mytext4);
+        window.draw(mytext5);
         for(size_t i=0;i<lifes.size();i++)
         {
             window.draw(lifes[i]);
             lifes.erase(lifes.begin()+i);
         }
-
-
+       }
         window.display();
-
     }
 
     return 0;

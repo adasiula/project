@@ -10,7 +10,7 @@
 
 AnimatedSprite::AnimatedSprite()
 {
-
+    life=10;
 }
 
 void AnimatedSprite::rotating(sf::RenderWindow &w)
@@ -20,7 +20,6 @@ void AnimatedSprite::rotating(sf::RenderWindow &w)
     float mx=this->getPosition().x-mouse_position.x;
     float my=this->getPosition().y-mouse_position.y;
     float rot=atan2(my,mx)*180/PI+180;
-
     this->setRotation(rot);
 }
 
@@ -89,15 +88,12 @@ void AnimatedSprite::shooting(sf::RenderWindow &w,std::vector<Bullet> &b,const s
     aimdirnorm.x=aimdir.x / sqrt(pow(aimdir.x,2)+pow(aimdir.y,2));
     aimdirnorm.y=aimdir.y / sqrt(pow(aimdir.x,2)+pow(aimdir.y,2));
 
-    //std::cout<<"sp: "<<sp<<"speedshot"<<b_p.speedshoot<<std::endl;
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
-        //std::cout<<"speedshoot"<<b_p.speedshoot<<std::endl;
         if(b1.sp>=b1.speedshoot)
         {
-            b1.shape.setPosition(playercenter);
-            //std::cout<<"maxspeed"<<b_p.maxspeed<<std::endl;
-            b1.currVelocity=aimdirnorm*b1.maxspeed;
+            b1.shape_bullet.setPosition(playercenter);
+            b1.velocity_bullet=aimdirnorm*b1.maxspeed;
             b.emplace_back(Bullet(b1));
             b1.sp=0;
         }
@@ -108,13 +104,13 @@ void AnimatedSprite::shooting(sf::RenderWindow &w,std::vector<Bullet> &b,const s
     {
         for (auto &r:walls)
         {
-            if(r.getGlobalBounds().intersects(b[i].shape.getGlobalBounds()))
+            if(r.getGlobalBounds().intersects(b[i].shape_bullet.getGlobalBounds()))
             {b.erase(b.begin()+i);break;}}
-        b[i].shape.move(b[i].currVelocity);
-        if(b[i].shape.getPosition().x<0||
-                b[i].shape.getPosition().x>w.getSize().x||
-                b[i].shape.getPosition().y<0||
-                b[i].shape.getPosition().y>w.getSize().y)
+        b[i].shape_bullet.move(b[i].velocity_bullet);
+        if(b[i].shape_bullet.getPosition().x<0||
+                b[i].shape_bullet.getPosition().x>w.getSize().x||
+                b[i].shape_bullet.getPosition().y<0||
+                b[i].shape_bullet.getPosition().y>w.getSize().y)
         {
             b.erase(b.begin()+i);
         }
@@ -122,7 +118,7 @@ void AnimatedSprite::shooting(sf::RenderWindow &w,std::vector<Bullet> &b,const s
         {
             for(size_t k=0;k<en.size();k++)
             {
-            if(b[i].shape.getGlobalBounds().intersects(en[k].getGlobalBounds()))
+            if(b[i].shape_bullet.getGlobalBounds().intersects(en[k].getGlobalBounds()))
             {
 
                 en[k].life-=b1.damage;
