@@ -8,15 +8,15 @@ Sterujemy postacią za pomocą strzałek. Strzelamy i celujemy za pomocą myszki
 
 Do napisania gry skorzystałem z następujących bibliotek:
 
-#include <iostream>
-#include <vector>
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <math.h>
-#include <stdio.h>
-#include <cstdlib>
-#include <sstream>
+  #include <iostream>
+  #include <vector>
+  #include <SFML/Window.hpp>
+  #include <SFML/Graphics.hpp>
+  #include <SFML/Audio.hpp>
+  #include <math.h>
+  #include <stdio.h>
+  #include <cstdlib>
+  #include <sstream>
   
 Tekstury nie miały licencji jednak były pobrane ze strony:
 https://opengameart.org/
